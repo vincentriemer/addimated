@@ -1,6 +1,6 @@
 {
   "name": "@unstable/addimated",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An always interruptable, declarative animation library for React",
   "keywords": [
     "Additive",
@@ -32,7 +32,7 @@
   "module": "lib/addimated.mjs",
   "scripts": {
     "build": "node -r esm scripts/build.mjs",
-    "microbundle": "microbundle --format=es,cjs --target=web --strict",
+    "microbundle": "microbundle --format=es,cjs --jsx=React.createElement --target=web --strict",
     "prepublishOnly": "yarn build"
   },
   "husky": {

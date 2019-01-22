@@ -19,7 +19,7 @@ async function clean() {
 
 // run microbundle
 async function bundle() {
-  return asyncExec("yarn microbundle", true);
+  return asyncExec("yarn --silent microbundle", true);
 }
 
 // add flowtype bridge
@@ -43,6 +43,8 @@ async function build() {
     await logger(clean(), "Cleaning lib folder");
     const output = await logger(bundle(), "Bundling");
     await logger(flowBridge(), "Creating flowtype bridge");
+
+    console.log(output);
   } catch (err) {
     console.error(err);
   }

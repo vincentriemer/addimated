@@ -1,5 +1,6 @@
-import invariant from "invariant";
 // @flow
+
+import invariant from "invariant";
 import * as React from "react";
 
 import * as Animated from "./index";
@@ -16,7 +17,7 @@ function useInitializedRef<T>(initializer: () => T): { current: T | null } {
   return React.useRef(initialValue);
 }
 
-export function useAnimatedValue(
+function useAnimatedValue(
   value: number,
   animationFactory: typeof defaultAnimationFactory = defaultAnimationFactory
 ) {
@@ -44,3 +45,4 @@ export function useAnimatedValue(
 }
 
 export * from "./index";
+export { useAnimatedValue };
