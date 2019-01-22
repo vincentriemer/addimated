@@ -18,8 +18,8 @@ const {
 
 function createAnimatedComponent(Component: any): any {
   const AnimatedComponent = forwardRef((props, ref) => {
-    const isMountedRef = useRef<boolean>(true);
-    const propsAnimatedRef = useRef<AnimatedProps>(null);
+    const isMountedRef = useRef(true);
+    const propsAnimatedRef = useRef(null);
     const forceUpdate = useState(null)[1];
     const componentRef = useRef(null);
 

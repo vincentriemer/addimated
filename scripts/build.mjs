@@ -25,7 +25,12 @@ async function bundle() {
 // add flowtype bridge
 async function flowBridge() {
   fs.writeFileSync(
-    path.resolve(LIB_DIR, "./addimated.flow.js"),
+    path.resolve(LIB_DIR, "./addimated.js.flow"),
+    flowBridgeSrc,
+    "utf8"
+  );
+  fs.writeFileSync(
+    path.resolve(LIB_DIR, "./addimated.mjs.flow"),
     flowBridgeSrc,
     "utf8"
   );

@@ -1,6 +1,6 @@
 {
   "name": "@unstable/addimated",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An always interruptable, declarative animation library for React",
   "keywords": [
     "Additive",
