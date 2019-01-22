@@ -1,0 +1,94 @@
+{
+  "name": "@unstable/addimated",
+  "version": "0.0.1",
+  "description": "An always interruptable, declarative animation library for React",
+  "keywords": [
+    "Additive",
+    "Animated",
+    "Animation",
+    "React"
+  ],
+  "homepage": "https://github.com/vincentriemer/addimated",
+  "bugs": {
+    "url": "https://github.com/vincentriemer/addimated/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vincentriemer/addimated.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Vincent Riemer",
+    "url": "https://github.com/vincentriemer"
+  },
+  "files": [
+    "lib",
+    "src",
+    "LICENSE.md",
+    "THIRD-PARTY-LICENSES.txt",
+    "index.d.ts"
+  ],
+  "main": "lib/addimated.js",
+  "module": "lib/addimated.mjs",
+  "scripts": {
+    "build": "node -r esm scripts/build.mjs",
+    "microbundle": "microbundle --format=es,cjs --target=web --strict",
+    "prepublishOnly": "yarn build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "bezier-easing": "^2.1.0",
+    "invariant": "^2.2.4",
+    "normalize-css-color": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.20",
+    "@types/react-native": "^0.57.29",
+    "esm": "^3.1.1",
+    "flow-bin": "^0.91.0",
+    "flow-copy-source": "^2.0.2",
+    "husky": "^1.3.1",
+    "import-sort-cli": "^5.2.0",
+    "import-sort-parser-babylon": "^5.2.0",
+    "import-sort-style-module": "^5.0.0",
+    "lint-staged": "^8.1.0",
+    "microbundle": "^0.9.0",
+    "node": "^11.0.0",
+    "prettier": "^1.16.1",
+    "progress-estimator": "^0.2.2",
+    "react": "16.8.0-alpha.1",
+    "shelljs": "^0.8.3",
+    "sort-package-json": "^1.17.1"
+  },
+  "peerDependencies": {
+    "react": "16.8.0-alpha.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "importSort": {
+    ".mjs": {
+      "parser": "babylon",
+      "style": "module"
+    }
+  },
+  "lint-staged": {
+    "*.mjs": [
+      "import-sort --write",
+      "git add"
+    ],
+    "*.{mjs,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "package.json": [
+      "sort-package-json",
+      "git add"
+    ]
+  },
+  "source": "src/exports.mjs"
+}
