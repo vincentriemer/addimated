@@ -47,8 +47,8 @@ async function build() {
 
   try {
     await logger(clean(), "Cleaning lib folder");
-    const output = await logger(bundle(), "Bundling");
     await logger(flowBridge(), "Creating flowtype bridge");
+    await logger(bundle(), "Bundling");
   } catch (err) {
     console.error(err);
   }

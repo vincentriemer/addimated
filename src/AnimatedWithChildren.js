@@ -1,6 +1,7 @@
 // @flow
 
 import invariant from "invariant";
+import warning from "warning";
 
 import { Animated } from "./Animated";
 
@@ -35,9 +36,9 @@ class AnimatedWithChildren extends Animated {
   }
 
   __removeChild(child: Animated): void {
-    if (!this.children.delete(child)) {
-      console.warn(`Attempted to remove child that doesn't exist`);
-    }
+    const success = this.children.delete(child);
+    warning(success, `Attempted to remove child that doesn't exist`);
+
     if (this.children.size === 0) {
       this.__detach();
     }

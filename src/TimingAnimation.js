@@ -1,6 +1,7 @@
 // @flow
 
 import invariant from "invariant";
+import warning from "warning";
 
 import { type AnimatedValue } from "./AnimatedValue";
 import { Animation, type AnimationConfig, type EndCallback } from "./Animation";
@@ -58,10 +59,11 @@ class TimingAnimation extends Animation {
 
   step(timestamp: number): void {
     const startTime = this.startTime;
-    if (startTime == null) {
-      console.warn("Attempted to step an animation which hasn't started");
-      return;
-    }
+
+    warning(
+      startTime != null,
+      "Attempted to step an animation which hasn't started"
+    );
 
     if (!this.ended && timestamp >= startTime + this.duration) {
       this.stop(true);

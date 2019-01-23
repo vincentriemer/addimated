@@ -43,10 +43,10 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.1",
     "bezier-easing": "^2.1.0",
     "invariant": "^2.2.4",
-    "normalize-css-color": "^1.0.2"
+    "normalize-css-color": "^1.0.2",
+    "warning": "^4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -54,10 +54,13 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.0",
     "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
+    "@babel/runtime": "^7.3.1",
     "@types/react": "^16.7.20",
     "@types/react-native": "^0.57.29",
+    "babel-preset-fbjs": "^3.1.2",
     "esm": "^3.1.1",
     "flow-bin": "^0.91.0",
     "flow-copy-source": "^2.0.2",
@@ -74,6 +77,7 @@
     "sort-package-json": "^1.17.1"
   },
   "peerDependencies": {
+    "@babel/runtime": "^7.0.0",
     "react": "16.8.0-alpha.1"
   },
   "publishConfig": {
@@ -81,6 +85,10 @@
   },
   "importSort": {
     ".js": {
+      "parser": "babylon",
+      "style": "module"
+    },
+    ".mjs": {
       "parser": "babylon",
       "style": "module"
     }
