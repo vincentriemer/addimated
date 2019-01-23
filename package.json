@@ -1,6 +1,6 @@
 {
   "name": "@unstable/addimated",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An always interruptable, declarative animation library for React",
   "keywords": [
     "Additive",
@@ -26,6 +26,7 @@
     "lib-commonjs",
     "src",
     "scripts/unstableWarning.js",
+    "scripts/paths.js",
     "LICENSE.md",
     "THIRD-PARTY-LICENSES.txt",
     "index.d.ts"
