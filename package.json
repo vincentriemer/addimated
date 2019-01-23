@@ -80,17 +80,17 @@
     "access": "public"
   },
   "importSort": {
-    ".mjs": {
+    ".js": {
       "parser": "babylon",
       "style": "module"
     }
   },
   "lint-staged": {
-    "*.mjs": [
+    "*.{mjs,js}": [
       "import-sort --write",
       "git add"
     ],
-    "*.{mjs,json,md}": [
+    "*.{mjs,js,json,md}": [
       "prettier --write",
       "git add"
     ],
