@@ -18,7 +18,7 @@ Coming soon
 
 ## Examples
 
-Coming soon
+- [With `react-with-gesture`](https://codesandbox.io/s/wo1vnm11pl?hidenavigation=1&view=preview)
 
 ## API Reference
 
