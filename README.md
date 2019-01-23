@@ -1,4 +1,4 @@
-# addimated
+# addimated [![](https://img.shields.io/npm/v/@unstable/addimated.svg)](https://www.npmjs.com/package/@unstable/addimated) [![](https://img.shields.io/bundlephobia/minzip/@unstable/addimated.svg)](https://bundlephobia.com/result?p=@unstable/addimated)
 
 An always interruptable, declarative animation library for React.
 

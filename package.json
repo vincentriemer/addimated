@@ -25,6 +25,7 @@
     "lib",
     "lib-commonjs",
     "src",
+    "scripts/unstableWarning.js",
     "LICENSE.md",
     "THIRD-PARTY-LICENSES.txt",
     "index.d.ts"
@@ -32,9 +33,10 @@
   "main": "lib-commonjs/exports.js",
   "module": "lib/exports.js",
   "scripts": {
-    "build": "node -r esm scripts/build.mjs",
+    "build": "node -r esm scripts/build.js",
     "bundle:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib-commonjs --source-maps",
     "bundle:module": "BABEL_ENV=module babel src --out-dir lib --source-maps",
+    "postinstall": "node -r esm scripts/unstableWarning.js",
     "prepublishOnly": "yarn build"
   },
   "husky": {
@@ -44,6 +46,7 @@
   },
   "dependencies": {
     "bezier-easing": "^2.1.0",
+    "esm": "^3.1.1",
     "invariant": "^2.2.4",
     "normalize-css-color": "^1.0.2",
     "warning": "^4.0.2"

@@ -4,8 +4,8 @@ import * as path from "path";
 import createLogger from "progress-estimator";
 import * as shell from "shelljs";
 
-import { asyncExec } from "./asyncExec.mjs";
-import { LIB_CJS_DIR, LIB_DIR } from "./paths.mjs";
+import { asyncExec } from "./asyncExec.js";
+import { LIB_CJS_DIR, LIB_DIR } from "./paths.js";
 
 const flowBridgeSrc = `// @flow
 
