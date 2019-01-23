@@ -1,7 +1,7 @@
 // @flow
 
 import invariant from "invariant";
-import * as React from "react";
+import React from "react";
 
 import * as Animated from "./index";
 

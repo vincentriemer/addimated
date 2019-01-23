@@ -1,0 +1,13 @@
+{
+  "presets": [["@babel/env", { "modules": false }]],
+  "plugins": [
+    "@babel/transform-flow-strip-types",
+    "@babel/proposal-object-rest-spread",
+    "@babel/proposal-class-properties"
+  ],
+  "env": {
+    "commonjs": {
+      "presets": ["@babel/env"]
+    }
+  }
+}

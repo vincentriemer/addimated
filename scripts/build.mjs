@@ -5,32 +5,38 @@ import createLogger from "progress-estimator";
 import * as shell from "shelljs";
 
 import { asyncExec } from "./asyncExec.mjs";
-import { LIB_DIR } from "./paths.mjs";
+import { LIB_CJS_DIR, LIB_DIR } from "./paths.mjs";
 
 const flowBridgeSrc = `// @flow
 
-export * from "../src/exports.mjs";
+export * from "../src/exports.js";
 `;
 
 // clean the lib folder
 async function clean() {
   shell.rm("-rf", LIB_DIR);
+  shell.rm("-rf", LIB_CJS_DIR);
+  shell.mkdir(LIB_DIR);
+  shell.mkdir(LIB_CJS_DIR);
 }
 
 // run microbundle
 async function bundle() {
-  return asyncExec("yarn --silent microbundle", true);
+  return Promise.all([
+    asyncExec("yarn --silent bundle:module", true),
+    asyncExec("yarn --silent bundle:commonjs", true)
+  ]);
 }
 
 // add flowtype bridge
 async function flowBridge() {
   fs.writeFileSync(
-    path.resolve(LIB_DIR, "./addimated.js.flow"),
+    path.resolve(LIB_DIR, "./exports.js.flow"),
     flowBridgeSrc,
     "utf8"
   );
   fs.writeFileSync(
-    path.resolve(LIB_DIR, "./addimated.mjs.flow"),
+    path.resolve(LIB_CJS_DIR, "./exports.js.flow"),
     flowBridgeSrc,
     "utf8"
   );
@@ -43,8 +49,6 @@ async function build() {
     await logger(clean(), "Cleaning lib folder");
     const output = await logger(bundle(), "Bundling");
     await logger(flowBridge(), "Creating flowtype bridge");
-
-    console.log(output);
   } catch (err) {
     console.error(err);
   }

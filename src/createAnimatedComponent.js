@@ -1,36 +1,26 @@
 // @flow
 
 import invariant from "invariant";
-import * as React from "react";
+import React from "react";
 
 import { AnimatedProps } from "./AnimatedProps";
 import { ApplyAnimatedValues, transformStyles } from "./ApplyAnimatedValues";
 
-const {
-  useState,
-  useRef,
-  useCallback,
-  useEffect,
-  forwardRef,
-  // $FlowFixMe
-  useImperativeHandle
-} = React;
-
 function createAnimatedComponent(Component: any): any {
-  const AnimatedComponent = forwardRef((props, ref) => {
-    const isMountedRef = useRef(true);
-    const propsAnimatedRef = useRef(null);
-    const forceUpdate = useState(null)[1];
-    const componentRef = useRef(null);
+  const AnimatedComponent = React.forwardRef((props, ref) => {
+    const isMountedRef = React.useRef(true);
+    const propsAnimatedRef = React.useRef(null);
+    const forceUpdate = React.useState(null)[1];
+    const componentRef = React.useRef(null);
 
-    const setNativeProps = useCallback(props => {
+    const setNativeProps = React.useCallback(props => {
       const didUpdate = ApplyAnimatedValues(componentRef.current, props);
       if (!didUpdate) {
         isMountedRef.current && forceUpdate();
       }
     }, []);
 
-    const attachProps = useCallback(nextProps => {
+    const attachProps = React.useCallback(nextProps => {
       let oldPropsAnimated = propsAnimatedRef.current;
 
       // The system is best designed when setNativeProps is implemented. It is
@@ -74,7 +64,7 @@ function createAnimatedComponent(Component: any): any {
     );
 
     // componentWillUnmount-ish
-    useEffect(
+    React.useEffect(
       () => () => {
         isMountedRef.current = false;
         propsAnimatedRef.current && propsAnimatedRef.current.__detach();
@@ -82,12 +72,13 @@ function createAnimatedComponent(Component: any): any {
       []
     );
 
-    useImperativeHandle(ref, () => ({
+    // $FlowFixMe
+    React.useImperativeHandle(ref, () => ({
       setNativeProps,
       getNode: () => componentRef.current
     }));
 
-    const componentRefHandler = useCallback(
+    const componentRefHandler = React.useCallback(
       (value: ?any) => {
         if (typeof ref === "function") {
           ref(value);
@@ -101,13 +92,11 @@ function createAnimatedComponent(Component: any): any {
 
     const { style, ...other } = propsAnimated.__getValue();
 
-    return (
-      <Component
-        {...other}
-        style={transformStyles(style)}
-        ref={componentRefHandler}
-      />
-    );
+    return React.createElement(Component, {
+      ...other,
+      style: transformStyles(style),
+      ref: componentRefHandler
+    });
   });
 
   return AnimatedComponent;

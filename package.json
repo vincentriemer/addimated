@@ -1,6 +1,6 @@
 {
   "name": "@unstable/addimated",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "An always interruptable, declarative animation library for React",
   "keywords": [
     "Additive",
@@ -23,16 +23,18 @@
   },
   "files": [
     "lib",
+    "lib-commonjs",
     "src",
     "LICENSE.md",
     "THIRD-PARTY-LICENSES.txt",
     "index.d.ts"
   ],
-  "main": "lib/addimated.js",
-  "module": "lib/addimated.mjs",
+  "main": "lib-commonjs/exports.js",
+  "module": "lib/exports.js",
   "scripts": {
     "build": "node -r esm scripts/build.mjs",
-    "microbundle": "microbundle --format=es,cjs --jsx=React.createElement --target=web --strict",
+    "bundle:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib-commonjs --source-maps",
+    "bundle:module": "BABEL_ENV=module babel src --out-dir lib --source-maps",
     "prepublishOnly": "yarn build"
   },
   "husky": {
@@ -41,11 +43,19 @@
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.3.1",
     "bezier-easing": "^2.1.0",
     "invariant": "^2.2.4",
     "normalize-css-color": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.0",
+    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
     "@types/react": "^16.7.20",
     "@types/react-native": "^0.57.29",
     "esm": "^3.1.1",
@@ -56,7 +66,6 @@
     "import-sort-parser-babylon": "^5.2.0",
     "import-sort-style-module": "^5.0.0",
     "lint-staged": "^8.1.0",
-    "microbundle": "^0.9.0",
     "node": "^11.0.0",
     "prettier": "^1.16.1",
     "progress-estimator": "^0.2.2",
@@ -90,5 +99,5 @@
       "git add"
     ]
   },
-  "source": "src/exports.mjs"
+  "source": "src/exports.js"
 }

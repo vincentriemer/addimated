@@ -2,7 +2,6 @@
 
 import { Animated } from "./Animated";
 import { AnimatedStyle } from "./AnimatedStyle";
-
 class AnimatedProps extends Animated {
   props: Object;
   callback: () => void;

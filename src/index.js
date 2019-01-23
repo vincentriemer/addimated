@@ -1,7 +1,5 @@
 // @flow
 
-import * as React from "react";
-
 import { type Animated } from "./Animated";
 import { AnimatedInterpolation } from "./AnimatedInterpolation";
 import { AnimatedValue } from "./AnimatedValue";
@@ -205,18 +203,6 @@ const button = createAnimatedComponent("button");
 const div = createAnimatedComponent("div");
 const span = createAnimatedComponent("span");
 const img = createAnimatedComponent("img");
-
-function defaultAnimationFactory(
-  animatedValue: AnimatedValue,
-  toValue: number
-) {
-  return spring(animatedValue, { toValue });
-}
-
-function useInitializedRef<T>(initializer: () => T): { current: T | null } {
-  const initialValue = React.useMemo(initializer, []);
-  return React.useRef(initialValue);
-}
 
 export {
   // Animated Values
