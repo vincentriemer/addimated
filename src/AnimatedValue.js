@@ -127,11 +127,12 @@ class AnimatedValue extends AnimatedWithChildren {
   }
 
   stopAnimations(callback?: ?(value: number) => void): void {
+    const currentValue = this.__getValue();
     this.animations.forEach(anim => {
       anim.stop();
     });
     this.animations = [];
-    callback && callback(this.__getValue());
+    callback && callback(currentValue);
   }
 
   flush(): void {
