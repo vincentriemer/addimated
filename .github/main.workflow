@@ -1,4 +1,4 @@
-workflow "New workflow" {
+workflow "CI" {
   on = "push"
   resolves = ["Release"]
 }
