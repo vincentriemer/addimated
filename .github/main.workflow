@@ -31,7 +31,7 @@ action "Release Master Filter" {
 
 action "Pre-Release" {
   uses = "nuxt/actions-yarn@master"
-  needs = ["Release Master Filter"]
+  needs = ["Release Develop Filter"]
   args = "run semantic-release"
   secrets = ["NPM_TOKEN", "GH_TOKEN"]
   env = {
