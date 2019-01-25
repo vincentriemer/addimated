@@ -39,11 +39,6 @@
     "postinstall": "node scripts/unstableWarning.js",
     "prepublishOnly": "yarn build"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "bezier-easing": "^2.1.0",
     "invariant": "^2.2.4",
