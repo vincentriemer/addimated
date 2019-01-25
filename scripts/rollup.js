@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 
 const path = require("path");
+const shell = require("shelljs");
 const cluster = require("cluster");
 const rollup = require("rollup");
 const babel = require("rollup-plugin-babel");
 const compiler = require("@ampproject/rollup-plugin-closure-compiler");
+const { terser } = require("rollup-plugin-terser");
+const replace = require("rollup-plugin-replace");
+const commonjs = require("rollup-plugin-commonjs");
+const resolve = require("rollup-plugin-node-resolve");
 
 const Bundles = require("./bundles");
 const { ROOT_DIR } = require("./paths");
@@ -59,8 +64,7 @@ function getExternals(pjson) {
   const peerDeps = pjson.peerDependencies
     ? Object.keys(pjson.peerDependencies)
     : [];
-  const deps = pjson.dependencies ? Object.keys(pjson.dependencies) : [];
-  const allDeps = [].concat(peerDeps, deps);
+  const allDeps = [].concat(peerDeps);
 
   return (id, parentId, isResolved) => {
     if (!isResolved) {
@@ -92,8 +96,29 @@ function getPlugins(bundleType) {
 
   plugins.push(babel(getBabelOptions(bundleType)));
 
+  plugins.push(resolve());
+  plugins.push(commonjs());
+
   if (isProductionBundleType(bundleType)) {
+    plugins.push(
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("production")
+      })
+    );
     plugins.push(compiler({}));
+    plugins.push(
+      terser({
+        compress: {
+          ecma: isModernBundleType(bundleType) ? 6 : 5,
+          toplevel: true,
+          unsafe_arrows: isModernBundleType(bundleType)
+        },
+        mangle: {
+          toplevel: true,
+          module: isESMBundleType(bundleType)
+        }
+      })
+    );
   }
 
   return plugins;
@@ -120,5 +145,8 @@ module.exports = buildBundle;
 
 if (process.argv.length === 3 && process.argv[1].endsWith("rollup.js")) {
   const bundleType = process.argv[2];
-  buildBundle(bundleType);
+  buildBundle(bundleType).catch(err => {
+    console.error(err);
+    shell.exit(1);
+  });
 }
