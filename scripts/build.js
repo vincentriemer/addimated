@@ -68,7 +68,7 @@ const cleanTask = {
 };
 
 const entrypointsTask = {
-  title: "Generate Entrypoints",
+  title: "NPM Entrypoints",
   task: async () => {
     const templateSrc = await readFileAsync(
       path.join(TEMPLATE_DIR, "entrypoint.js.hbs"),
@@ -120,7 +120,7 @@ const bundleTask = {
 };
 
 const flowBridgeTask = {
-  title: "Generate Flowtype Bridge",
+  title: "Flowtype Bridge",
   task: async () => {
     const bridgePath = path.join(TEMPLATE_DIR, "flowBridge.hbs");
     const bridgeTemplateSrc = await readFileAsync(bridgePath, {
