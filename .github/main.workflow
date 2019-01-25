@@ -4,12 +4,12 @@ workflow "CI" {
 }
 
 action "Install" {
-  uses = "nuxt/actions-yarn@master"
+  uses = "./actions/yarn"
   args = "install --frozen-lockfile"
 }
 
 action "Build" {
-  uses = "nuxt/actions-yarn@master"
+  uses = "./actions/yarn"
   needs = ["Install"]
   args = "run build"
   env = {
@@ -18,7 +18,7 @@ action "Build" {
 }
 
 action "Release" {
-  uses = "nuxt/actions-yarn@master"
+  uses = "./actions/yarn"
   needs = ["Build"]
   args = "run semantic-release"
   secrets = ["NPM_TOKEN", "GH_TOKEN"]
