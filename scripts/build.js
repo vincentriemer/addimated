@@ -115,7 +115,7 @@ const bundleTask = {
         task: () =>
           execa("node", [path.join(SCRIPT_DIR, "rollup.js"), bundleType]).stdout
       })),
-      { concurrent: true }
+      { concurrent: process.env.CI == null }
     )
 };
 

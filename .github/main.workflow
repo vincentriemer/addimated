@@ -12,6 +12,9 @@ action "Build" {
   uses = "nuxt/actions-yarn@master"
   needs = ["Install"]
   args = "run build"
+  env = {
+    CI = "true"
+  }
 }
 
 action "Release Branch" {
