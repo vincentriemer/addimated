@@ -60,7 +60,6 @@
     "@types/react": "^16.7.20",
     "@types/react-native": "^0.57.29",
     "babel-preset-fbjs": "^3.1.2",
-    "bundlesize": "^0.17.1",
     "chalk": "^2.4.2",
     "cli-table": "^0.3.1",
     "cli-truncate": "^1.1.0",
@@ -100,16 +99,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "bundlesize": [
-    {
-      "path": "./lib/*/development.{js,mjs}",
-      "maxSize": "20 kB"
-    },
-    {
-      "path": "./lib/*/production.{js,mjs}",
-      "maxSize": "10 kB"
-    }
-  ],
   "exports": [
     "createAnimatedValue",
     "createAnimatedValueXY",
