@@ -1,5 +1,8 @@
 // @flow
 
+import invariant from "invariant";
+import React from "react";
+
 import { type Animated } from "./Animated";
 import { AnimatedInterpolation } from "./AnimatedInterpolation";
 import { AnimatedValue } from "./AnimatedValue";
@@ -204,6 +207,43 @@ const div = createAnimatedComponent("div");
 const span = createAnimatedComponent("span");
 const img = createAnimatedComponent("img");
 
+function defaultAnimationFactory(
+  animatedValue: AnimatedValue,
+  toValue: number
+) {
+  return timing(animatedValue, { toValue });
+}
+
+function useInitializedRef<T>(initializer: () => T): { current: T | null } {
+  const initialValue = React.useMemo(initializer, []);
+  return React.useRef(initialValue);
+}
+
+function useAnimatedValue(
+  value: number,
+  animationFactory: typeof defaultAnimationFactory = defaultAnimationFactory
+): [AnimatedValue, boolean] {
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const animatedValueRef = useInitializedRef(() => createAnimatedValue(value));
+  const animatedValue = animatedValueRef.current;
+  invariant(animatedValue, "Animated value not populated");
+  const prevValueRef = React.useRef(null);
+
+  React.useLayoutEffect(() => {
+    if (prevValueRef.current != null && value !== prevValueRef.current) {
+      setIsAnimating(true);
+      animationFactory(animatedValue, value).start(result => {
+        if (result.finished) {
+          setIsAnimating(false);
+        }
+      });
+    }
+    prevValueRef.current = value;
+  }, [value, animationFactory]);
+
+  return [animatedValue, isAnimating];
+}
+
 export {
   // Animated Values
   createAnimatedValue,
@@ -226,7 +266,9 @@ export {
   span,
   img,
   // Easing Functions
-  Easing
+  Easing,
+  // Hooks
+  useAnimatedValue
 };
 
 // types

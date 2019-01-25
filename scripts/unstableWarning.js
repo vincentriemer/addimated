@@ -1,6 +1,6 @@
-import * as path from "path";
+const path = require("path");
 
-import { ROOT_DIR } from "./paths";
+const { ROOT_DIR } = require("./paths");
 
 const maybeScopedDir = path.resolve(ROOT_DIR, "..").split(path.sep);
 const maybeScopedDirname = maybeScopedDir[maybeScopedDir.length - 1];

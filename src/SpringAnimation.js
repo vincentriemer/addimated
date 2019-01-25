@@ -224,7 +224,7 @@ class SpringAnimation extends Animation {
 
     this.startPosition = this.fromValue;
     this.lastPosition = this.startPosition;
-    this.currentValue = currentVal;
+    this.currentValue = this.fromValue;
 
     this.lastTime = performance.now() + this.delay;
     this.frameTime = 0;

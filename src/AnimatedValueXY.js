@@ -61,9 +61,10 @@ class AnimatedValueXY extends AnimatedWithChildren {
   }
 
   stopAnimations(callback?: ?(value: { x: number, y: number }) => void): void {
+    const currentValue = this.__getValue();
     this.x.stopAnimations();
     this.y.stopAnimations();
-    callback && callback(this.__getValue());
+    callback && callback(currentValue);
   }
 
   /**
