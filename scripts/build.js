@@ -113,7 +113,7 @@ const bundleTask = {
       allBundles.map(bundleType => ({
         title: getBundleLabel(bundleType),
         task: () =>
-          execa("node", [path.join(SCRIPT_DIR, "rollup.js"), bundleType])
+          execa("node", [path.join(SCRIPT_DIR, "rollup.js"), bundleType]).stdout
       })),
       { concurrent: true }
     )
@@ -122,10 +122,22 @@ const bundleTask = {
 const flowBridgeTask = {
   title: "Generate Flowtype Bridge",
   task: async () => {
-    const bridgePath = path.join(TEMPLATE_DIR, "bridge.js.flow");
-    const bridgeSrc = await readFileAsync(bridgePath, { encoding: "utf8" });
+    const bridgePath = path.join(TEMPLATE_DIR, "flowBridge.hbs");
+    const bridgeTemplateSrc = await readFileAsync(bridgePath, {
+      encoding: "utf8"
+    });
+
+    const template = Handlebars.compile(bridgeTemplateSrc);
+    const entrypointPath = path.join(ROOT_DIR, pjson.source);
 
     for (let outputPath of Object.values(entrypoints)) {
+      const context = {
+        relativeEntrypoint: path.relative(
+          path.dirname(outputPath),
+          entrypointPath
+        )
+      };
+      const bridgeSrc = template(context);
       await writeFileAsync(outputPath + ".flow", bridgeSrc, "utf8");
     }
   }

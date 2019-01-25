@@ -153,5 +153,5 @@
   },
   "module:modern": "lib/addimated.mjs",
   "sideEffects": false,
-  "source": "src/exports.js"
+  "source": "src/index.js"
 }
