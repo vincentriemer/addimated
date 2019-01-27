@@ -18,11 +18,12 @@ const pjson = require(path.join(ROOT_DIR, "/package.json"));
 
 const LoadingBarRenderer = require("./cli/loadingBarRenderer");
 
+// Create a worker in a local build but not in CI
 function createWorker(path) {
-  return new Worker(path, {
-    numWorkers: process.env.CI == null ? undefined : 1,
-    enableWorkerThreads: false
-  });
+  if (process.env.CI == null) {
+    return new Worker(path);
+  }
+  return require(path);
 }
 
 const { readExports } = createWorker(require.resolve("./readExports.js"));
