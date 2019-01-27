@@ -6,16 +6,27 @@ const Listr = require("listr");
 const createLogger = require("progress-estimator");
 const shell = require("shelljs");
 const execa = require("execa");
-const Handlebars = require("handlebars");
+const Worker = require("jest-worker").default;
 
 const { LIB_DIR, SCRIPT_DIR, TEMPLATE_DIR, ROOT_DIR } = require("./paths");
 const { allBundles, bundleTypes } = require("./bundles");
-const { isProductionBundleType } = require("./packaging");
+const { isProductionBundleType, getBundleOutputPath } = require("./packaging");
 const { calculateResults, printResults, saveResults } = require("./stats");
+const Handlebars = require("./handlebars");
 
 const pjson = require(path.join(ROOT_DIR, "/package.json"));
 
 const LoadingBarRenderer = require("./cli/loadingBarRenderer");
+
+function createWorker(path) {
+  return new Worker(path, {
+    numWorkers: process.env.CI == null ? undefined : 1,
+    enableWorkerThreads: false
+  });
+}
+
+const { readExports } = createWorker(require.resolve("./readExports.js"));
+const { buildBundle } = createWorker(require.resolve("./rollup.js"));
 
 const entrypoints = {
   cjs: path.resolve(ROOT_DIR, pjson.main),
@@ -76,7 +87,7 @@ const entrypointsTask = {
     );
     const template = Handlebars.compile(templateSrc);
 
-    const exports = pjson.exports;
+    const exports = await readExports(getBundleOutputPath(ESM_DEV));
     for (let entrypointName of Object.keys(entrypoints)) {
       const entrypoint = entrypoints[entrypointName];
       const context = (() => {
@@ -112,8 +123,7 @@ const bundleTask = {
     new Listr(
       allBundles.map(bundleType => ({
         title: getBundleLabel(bundleType),
-        task: () =>
-          execa("node", [path.join(SCRIPT_DIR, "rollup.js"), bundleType]).stdout
+        task: () => buildBundle(bundleType)
       })),
       { concurrent: process.env.CI == null }
     )
@@ -146,7 +156,9 @@ const flowBridgeTask = {
 const generateTask = {
   title: "Generate",
   task: () =>
-    new Listr([entrypointsTask, flowBridgeTask], { concurrent: false })
+    new Listr([entrypointsTask, flowBridgeTask], {
+      concurrent: process.env.CI == null
+    })
 };
 
 const tasks = new Listr([cleanTask, bundleTask, generateTask], {

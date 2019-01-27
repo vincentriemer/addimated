@@ -20,9 +20,15 @@ import {
 } from "./{{type}}/production.{{extension}}";
 
 {{#each exports}}
+{{#if (eq this "default")}}
+export default process.env.NODE_ENV === "production"
+  ? {{this}}Prod 
+  : {{this}}Dev;
+{{else}}
 export const {{this}} = process.env.NODE_ENV === "production"
   ? {{this}}Prod 
   : {{this}}Dev;
+{{/if}}
 {{/each}}
 
 {{/if}}

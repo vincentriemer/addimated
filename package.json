@@ -69,11 +69,13 @@
     "flow-copy-source": "^2.0.2",
     "gzip-size": "^5.0.0",
     "handlebars": "^4.0.12",
+    "handlebars-utils": "^1.0.6",
     "husky": "^1.3.1",
     "import-sort-cli": "^5.2.0",
     "import-sort-parser-babylon": "^5.2.0",
     "import-sort-style-module": "^5.0.0",
     "indent-string": "^3.2.0",
+    "jest-worker": "^24.0.0",
     "lint-staged": "^8.1.0",
     "listr": "^0.14.3",
     "log-update": "^2.3.0",
@@ -99,25 +101,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "exports": [
-    "createAnimatedValue",
-    "createAnimatedValueXY",
-    "interpolate",
-    "spring",
-    "timing",
-    "delay",
-    "sequence",
-    "parallel",
-    "stagger",
-    "createAnimatedComponent",
-    "a",
-    "button",
-    "div",
-    "span",
-    "img",
-    "Easing",
-    "useAnimatedValue"
-  ],
   "importSort": {
     ".js": {
       "parser": "babylon",

@@ -19,6 +19,7 @@ const {
   isESMBundleType,
   isModernBundleType
 } = require("./packaging");
+const { getBabelOptions } = require("./babelOptions");
 
 const pjson = require(path.join(ROOT_DIR, "package.json"));
 
@@ -30,49 +31,6 @@ const {
   ESM_MODERN_DEV,
   ESM_MODERN_PROD
 } = Bundles.bundleTypes;
-
-function getBabelOptions(bundleType) {
-  const presetEnvOptions = { modules: false, loose: true };
-
-  if (isModernBundleType(bundleType)) {
-    presetEnvOptions.targets = { esmodules: true };
-  }
-
-  const presets = [[require.resolve("@babel/preset-env"), presetEnvOptions]];
-
-  const plugins = [
-    require.resolve("@babel/plugin-transform-flow-strip-types"),
-    [
-      require.resolve("@babel/plugin-proposal-object-rest-spread"),
-      {
-        loose: true,
-        useBuiltIns: isModernBundleType(bundleType)
-      }
-    ],
-    [
-      require.resolve("@babel/plugin-proposal-class-properties"),
-      { loose: true }
-    ],
-    [
-      require.resolve("@babel/plugin-transform-runtime"),
-      {
-        corejs: false,
-        helpers: true,
-        regenerator: false,
-        useESModules: isESMBundleType(bundleType)
-      }
-    ],
-    require.resolve("babel-preset-fbjs/plugins/dev-expression.js")
-  ];
-
-  return {
-    exclude: "node_modules/**",
-    babelrc: false,
-    runtimeHelpers: true,
-    presets,
-    plugins
-  };
-}
 
 function getExternals(pjson) {
   const peerDeps = pjson.peerDependencies
@@ -155,12 +113,12 @@ async function buildBundle(bundleType) {
   await bundle.write(outputOptions);
 }
 
-module.exports = buildBundle;
+module.exports = { buildBundle };
 
-if (process.argv.length === 3 && process.argv[1].endsWith("rollup.js")) {
-  const bundleType = process.argv[2];
-  buildBundle(bundleType).catch(err => {
-    console.error(err);
-    shell.exit(1);
-  });
-}
+// if (process.argv.length === 3 && process.argv[1].endsWith("rollup.js")) {
+//   const bundleType = process.argv[2];
+//   buildBundle(bundleType).catch(err => {
+//     console.error(err);
+//     shell.exit(1);
+//   });
+// }
