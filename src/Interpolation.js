@@ -7,7 +7,7 @@ export type ExtrapolateType = "extend" | "identity" | "clamp";
 
 export type InterpolationConfigType = {
   inputRange: Array<number>,
-  outputRange: Array<number> | Array<string>,
+  outputRange: Array<number | string>,
   easing?: (input: number) => number,
   extrapolate?: ExtrapolateType,
   extrapolateLeft?: ExtrapolateType,

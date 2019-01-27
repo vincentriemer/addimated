@@ -1,3 +1,5 @@
+// @flow
+
 import * as Animated from "@unstable/addimated";
 import React from "react";
 
@@ -5,7 +7,7 @@ import { useLayoutViewportSize } from "../utils/useLayoutViewportSize";
 import styles from "./interruption.module.css";
 
 const TARGET_SIZE = 150;
-const ANIMATION_PADDING = 10;
+const ANIMATION_PADDING = 20;
 
 function getRandomNumberWithMinDelta(prevVal, minDelta = 0.1) {
   let nextVal = prevVal;
@@ -17,17 +19,18 @@ function getRandomNumberWithMinDelta(prevVal, minDelta = 0.1) {
   return nextVal;
 }
 
-const InterruptionExample = props => {
+const InterruptionExample = () => {
   const [animationType, setAnimationType] = React.useState("timing");
-  const [x, setX] = React.useState(0);
-  const [y, setY] = React.useState(0);
+  const [position, setPosition] = React.useState({ x: 0, y: 0 });
 
   const { width, height } = useLayoutViewportSize();
 
   const setRandomPositionWithAnimationType = React.useCallback(animType => {
     setAnimationType(animType);
-    setX(x => getRandomNumberWithMinDelta(x));
-    setY(y => getRandomNumberWithMinDelta(y));
+    setPosition(({ x, y }) => ({
+      x: getRandomNumberWithMinDelta(x),
+      y: getRandomNumberWithMinDelta(y)
+    }));
   }, []);
 
   const handleSpringClick = React.useCallback(() => {
@@ -59,8 +62,10 @@ const InterruptionExample = props => {
     };
   }, [animationType]);
 
-  const [xAnim, isXAnimating] = Animated.useAnimatedValue(x, animationFactory);
-  const [yAnim, isYAnimating] = Animated.useAnimatedValue(y, animationFactory);
+  const [anim, isAnimating] = Animated.useAnimatedValueXY(
+    position,
+    animationFactory
+  );
 
   return (
     <div className={styles.app}>
@@ -74,10 +79,10 @@ const InterruptionExample = props => {
           style={{
             width: TARGET_SIZE,
             height: TARGET_SIZE,
-            willChange: isXAnimating || isYAnimating ? "transform" : "auto",
+            willChange: isAnimating ? "transform" : "auto",
             transform: [
               {
-                translateX: Animated.interpolate(xAnim, {
+                translateX: Animated.interpolate(anim.x, {
                   inputRange: [0, 1],
                   outputRange: [
                     ANIMATION_PADDING,
@@ -86,7 +91,7 @@ const InterruptionExample = props => {
                 })
               },
               {
-                translateY: Animated.interpolate(yAnim, {
+                translateY: Animated.interpolate(anim.y, {
                   inputRange: [0, 1],
                   outputRange: [
                     ANIMATION_PADDING,

@@ -6,10 +6,12 @@ import { AnimatedValue } from "./AnimatedValue";
 import { AnimatedWithChildren } from "./AnimatedWithChildren";
 import { type Manager } from "./Manager";
 
-export type AnimatedValueXYInput = {
-  x: number | AnimatedValue,
-  y: number | AnimatedValue
-};
+export type AnimatedValueXYInput =
+  | {|
+      x: number,
+      y: number
+    |}
+  | {| x: AnimatedValue, y: AnimatedValue |};
 
 class AnimatedValueXY extends AnimatedWithChildren {
   x: AnimatedValue;

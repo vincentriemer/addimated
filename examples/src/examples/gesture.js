@@ -1,3 +1,5 @@
+// @flow
+
 import * as Animated from "@unstable/addimated";
 import React from "react";
 import { useGesture } from "react-with-gesture";
@@ -6,7 +8,7 @@ import styles from "./gesture.module.css";
 
 const TARGET_SIZE = 150;
 
-const GestureExample = props => {
+const GestureExample = () => {
   const [isAnimating, setIsAnimating] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
   const [anim] = React.useState(() =>

@@ -899,7 +899,7 @@
   integrity sha512-42zEJkBpNfMEAvWR5WlwtTH22oDzcMjFsL9gDGExwF8X8WvAiw7Vwop7hPw03QT8TKfec83LwbHj6SvpqM4ELQ==
 
 "@unstable/addimated@file:./..":
-  version "0.0.13"
+  version "0.0.0-development"
   dependencies:
     bezier-easing "^2.1.0"
     invariant "^2.2.4"

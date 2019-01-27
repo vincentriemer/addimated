@@ -162,4 +162,14 @@ declare module "@unstable/addimated" {
     value: number,
     animationFactory?: AnimationFactory
   ): [AnimatedValue, boolean];
+
+  type AnimationFactoryXY = (
+    animatedValue: AnimatedValueXY,
+    toValue: { x: number; y: number }
+  ) => CompositeAnimation;
+
+  export function useAnimatedValueXY(
+    value: { x: number; y: number },
+    animationFactory?: AnimationFactoryXY
+  ): [AnimatedValueXY, boolean];
 }

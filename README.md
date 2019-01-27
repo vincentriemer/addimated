@@ -129,6 +129,8 @@ Make any React component Animatable. Used to create `Animated.div`, etc.
 
 #### `useAnimatedValue(currentValue: number, animationFactory: ?Function): [AnimatedValue, boolean]`
 
+#### `useAnimatedValue(currentValue: { x: number, y: number }, animationFactory: ?Function): [AnimatedValueXY, boolean]`
+
 ### Easing
 
 #### Predefined Animations

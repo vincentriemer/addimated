@@ -17,18 +17,18 @@ import { SpringAnimation } from "./SpringAnimation";
 import { TimingAnimation } from "./TimingAnimation";
 
 type TimingAnimationConfig = AnimationConfig & {
-  toValue: number | { x: number, y: number },
+  toValue: number | AnimatedValue | { x: number, y: number } | AnimatedValueXY,
   easing?: (value: number) => number,
   duration?: number,
   delay?: number
 };
 
 type SpringAnimationConfig = AnimationConfig & {
-  toValue: number | { x: number, y: number },
+  toValue: number | AnimatedValue | { x: number, y: number } | AnimatedValueXY,
   overshootClamping?: boolean,
   restDisplacementThreshold?: number,
   restSpeedThreshold?: number,
-  velocity?: number,
+  velocity?: number | { x: number, y: number },
   bounciness?: number,
   speed?: number,
   tension?: number,
@@ -208,8 +208,8 @@ const span = createAnimatedComponent("span");
 const img = createAnimatedComponent("img");
 
 function defaultAnimationFactory(
-  animatedValue: AnimatedValue,
-  toValue: number
+  animatedValue: AnimatedValue | AnimatedValueXY,
+  toValue: number | { x: number, y: number }
 ) {
   return timing(animatedValue, { toValue });
 }
@@ -244,6 +244,33 @@ function useAnimatedValue(
   return [animatedValue, isAnimating];
 }
 
+function useAnimatedValueXY(
+  value: {| x: number, y: number |},
+  animationFactory: typeof defaultAnimationFactory = defaultAnimationFactory
+) {
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const animatedValueRef = useInitializedRef(() =>
+    createAnimatedValueXY(value)
+  );
+  const animatedValue = animatedValueRef.current;
+  invariant(animatedValue, "Animated value not populated");
+  const prevValueRef = React.useRef(null);
+
+  React.useLayoutEffect(() => {
+    if (prevValueRef.current != null && value !== prevValueRef.current) {
+      setIsAnimating(true);
+      animationFactory(animatedValue, value).start(result => {
+        if (result.finished) {
+          setIsAnimating(false);
+        }
+      });
+    }
+    prevValueRef.current = value;
+  }, [value.x, value.y, animationFactory]);
+
+  return [animatedValue, isAnimating];
+}
+
 export {
   // Animated Values
   createAnimatedValue,
@@ -268,7 +295,8 @@ export {
   // Easing Functions
   Easing,
   // Hooks
-  useAnimatedValue
+  useAnimatedValue,
+  useAnimatedValueXY
 };
 
 // types

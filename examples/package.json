@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postinstall": "rm -rf node_modules/@unstable/addimated/node_modules"
+    "postinstall": "rm -rf node_modules/@unstable/addimated/{node_modules,examples}"
   },
   "browserslist": [
     ">0.2%",
