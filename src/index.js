@@ -219,9 +219,14 @@ function useInitializedRef<T>(initializer: () => T): { current: T | null } {
   return React.useRef(initialValue);
 }
 
+type AnimationFactory = (
+  animatedValue: AnimatedValue,
+  toValue: number
+) => CompositeAnimation;
+
 function useAnimatedValue(
   value: number,
-  animationFactory: typeof defaultAnimationFactory = defaultAnimationFactory
+  animationFactory: AnimationFactory = defaultAnimationFactory
 ): [AnimatedValue, boolean] {
   const [isAnimating, setIsAnimating] = React.useState(false);
   const animatedValueRef = useInitializedRef(() => createAnimatedValue(value));
@@ -244,9 +249,14 @@ function useAnimatedValue(
   return [animatedValue, isAnimating];
 }
 
+type AnimationFactoryXY = (
+  animatedValue: AnimatedValueXY,
+  toValue: {| x: number, y: number |}
+) => CompositeAnimation;
+
 function useAnimatedValueXY(
   value: {| x: number, y: number |},
-  animationFactory: typeof defaultAnimationFactory = defaultAnimationFactory
+  animationFactory: AnimationFactoryXY = defaultAnimationFactory
 ) {
   const [isAnimating, setIsAnimating] = React.useState(false);
   const animatedValueRef = useInitializedRef(() =>
