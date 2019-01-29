@@ -27,17 +27,17 @@ import * as Animated from "@unstable/addimated";
 
 ### Animated Values
 
-#### `createAnimatedValue(initialValue: number): AnimatedValue`
+#### `createAnimatedValue(initialValue: number):`[`AnimatedValue`](#animatedvalue)
 
 Creates a standard value for driving animations.
 
-#### `createAnimatedValueXY(initialValueXY: { x: number, y: number }): AnimatedValueXY`
+#### `createAnimatedValueXY(initialValueXY: { x: number, y: number }):`[`AnimatedValueXY`](#animatedvaluexy)
 
 Creates a 2D value for driving 2D animations, such as pan gestures.
 
 ### Interpolation
 
-#### `interpolate(value: AnimatedValue, config: Object): AnimatedValue`
+#### `interpolate(value:`[`AnimatedValue`](#animatedvalue)`, config: Object):`[`AnimatedValue`](#animatedvalue)
 
 Maps input ranges to output ranges, typically using a linear interpolation but also supports easing functions. By default, it will extrapolate the curve beyond the ranges given, but you can also have it clamp the output value.
 
@@ -52,7 +52,7 @@ Config is an object that may have the following options:
 
 ### Animations
 
-#### `timing(value: AnimatedValue|AnimatedValueXY, config: Object): Animation`
+#### `timing(value:`[`AnimatedValue`](#animatedvalue)`|`[`AnimatedValueXY`](#animatedvaluexy)`, config: Object):` [`Animation`](#animation)
 
 Animates a value along a timed easing curve. The Easing module has tons of predefined curves, or you can use your own function.
 
@@ -63,7 +63,7 @@ Config is an object that may have the following options:
 - `easing`: Easing function to define curve. Default is `Easing.inOut(Easing.ease)`.
 - `delay`: Start the animation after delay (milliseconds). Default 0.
 
-#### `spring(value: AnimatedValue|AnimatedValueXY, config: Object): Animation`
+#### `spring(value:`[`AnimatedValue`](#animatedvalue)`|`[`AnimatedValueXY`](#animatedvaluexy)`, config: Object):`[`Animation`](#animation)
 
 Animates a value according to an analytical spring model based on damped harmonic oscillation. Tracks velocity state to create fluid motions as the toValue updates, and can be chained together.
 
@@ -95,19 +95,19 @@ Other configuration options are as follows:
 
 ### Composite Animations
 
-#### `delay(time: number): Animation`
+#### `delay(time: number):` [`Animation`](#animation)
 
-Starts an animation after the given delay
+Creates an empty animation that lasts for the given `time`, useful when used inside a `sequence` to create spacing between animations.
 
-#### `sequence(animations: Animation[]): Animation`
+#### `sequence(animations:`[`Animation`](#animation)`[]):`[`Animation`](#animation)
 
 Starts an array of animations in order, waiting for each to complete before starting the next. If the current running animation is stopped, no following animations will be started.
 
-#### `parallel(animations: Animation[]): Animation`
+#### `parallel(animations:`[`Animation`](#animation)`[]):`[`Animation`](#animation)
 
 Starts an array of animations all at the same time.
 
-#### `stagger(time: number, animations: Animation[]): Animation`
+#### `stagger(time: number, animations:`[`Animation`](#animation)`[]):`[`Animation`](#animation)
 
 Array of animations may run in parallel (overlap), but are started in sequence with successive delays. Nice for doing trailing effects.
 
@@ -127,9 +127,23 @@ Make any React component Animatable. Used to create `Animated.div`, etc.
 
 ### Hooks
 
-#### `useAnimatedValue(currentValue: number, animationFactory: ?Function): [AnimatedValue, boolean]`
+#### `useAnimatedValue(currentValue: number, animationFactory: ?Function): [`[`AnimatedValue`](#animatedvalue)`, boolean]`
 
-#### `useAnimatedValueXY(currentValue: { x: number, y: number }, animationFactory: ?Function): [AnimatedValueXY, boolean]`
+A hook that turns the `currentValue` into an [`AnimatedValue`](#animatedvalue) where when the `currentValue` changes, it is animated with the [`Animation`](#animation) provided by the optional `animationFactory`.
+
+If `animationFactory` is not provided it defaults to:
+
+```js
+function defaultAnimationFactory(animatedValue, toValue) {
+  return timing(animatedValue, { toValue });
+}
+```
+
+It returns a tuple where the first value is the resulting [`AnimatedValue`](#animatedvalue) and the second is a `boolean` that specifies if the value is being animated or not.
+
+#### `useAnimatedValueXY(currentValue: { x: number, y: number }, animationFactory: ?Function): [`[`AnimatedValueXY`](#animatedvaluexy)`, boolean]`
+
+An equivalent hook to `useAnimatedValue` but handles [`AnimatedXY`](#animatedxy) values instead
 
 ### Easing
 
@@ -161,3 +175,37 @@ Make any React component Animatable. Used to create `Animated.div`, etc.
 - `Easing.exp`: An exponential function.
 - `Easing.step0`: A stepping function, returns 1 for any positive value.
 - `Easing.step1`A stepping function, returns 1 if a value is greater than or equal to 1.
+
+### Interfaces
+
+#### AnimatedValue
+
+##### Methods
+
+- `setValue(value: number): void`
+- `setOffset(offset: number): void`
+- `flattenOffset(): void`
+- `extractOffset(): void`
+- `stopAnimations(callback: ?Function): void`
+
+#### AnimatedValueXY
+
+##### Properties
+
+- `x:`[`AnimatedValue`](#animatedvalue)
+- `y:`[`AnimatedValue`](#animatedvalue)
+
+##### Methods
+
+- `setValue(value: { x: number, y: number }): void`
+- `setOffset(offset: { x: number, y: number }): void`
+- `flattenOffset(): void`
+- `extractOffset(): void`
+- `stopAnimations(callback: ?Function): void`
+- `getTranslateTransform(): [{ translateX: number }, { translateY: number}]`
+
+#### Animation
+
+##### Methods
+
+- `start(callback: ?Function): void`
