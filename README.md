@@ -5,11 +5,12 @@
 <p align="center">An always interruptible, declarative animation library for React.</p>
 
 <p align="center">
+  <img alt="" src="https://img.shields.io/badge/status-proof--of--concept-red.svg">
   <a href="https://www.npmjs.com/package/@unstable/addimated">
-    <img src="https://img.shields.io/npm/v/@unstable/addimated.svg">
+    <img alt="" src="https://img.shields.io/npm/v/@unstable/addimated.svg">
   </a>
   <a href="https://bundlephobia.com/result?p=@unstable/addimated">
-    <img src="https://img.shields.io/bundlephobia/minzip/@unstable/addimated.svg">
+    <img alt="" src="https://img.shields.io/bundlephobia/minzip/@unstable/addimated.svg">
   </a>
 </p>
 
