@@ -1,6 +1,6 @@
 {
   "name": "@unstable/addimated",
-  "version": "0.0.13",
+  "version": "0.0.0-development",
   "description": "An always interruptable, declarative animation library for React",
   "keywords": [
     "Additive",
@@ -33,11 +33,10 @@
   "main": "lib/addimated.cjs.js",
   "module": "lib/addimated.js",
   "scripts": {
-    "build": "node scripts/build.js",
-    "bundle:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib-commonjs --source-maps",
-    "bundle:module": "BABEL_ENV=module babel src --out-dir lib --source-maps",
+    "build": "vincent-scripts build",
     "postinstall": "node scripts/unstableWarning.js",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "bezier-easing": "^2.1.0",
@@ -46,50 +45,21 @@
     "warning": "^4.0.2"
   },
   "devDependencies": {
-    "@ampproject/rollup-plugin-closure-compiler": "^0.8.5",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.3.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.0",
-    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
-    "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/preset-env": "^7.3.1",
     "@babel/runtime": "^7.3.1",
     "@types/react": "^16.7.20",
     "@types/react-native": "^0.57.29",
-    "babel-preset-fbjs": "^3.1.2",
-    "bundlesize": "^0.17.1",
-    "chalk": "^2.4.2",
-    "cli-table": "^0.3.1",
-    "cli-truncate": "^1.1.0",
-    "esm": "^3.1.1",
-    "execa": "^1.0.0",
-    "filesize": "^4.0.0",
+    "@vincentriemer/scripts": "^1.0.1",
     "flow-bin": "^0.91.0",
-    "flow-copy-source": "^2.0.2",
-    "handlebars": "^4.0.12",
     "husky": "^1.3.1",
     "import-sort-cli": "^5.2.0",
     "import-sort-parser-babylon": "^5.2.0",
     "import-sort-style-module": "^5.0.0",
-    "indent-string": "^3.2.0",
     "lint-staged": "^8.1.0",
-    "listr": "^0.14.3",
-    "log-update": "^2.3.0",
     "node": "^11.0.0",
     "prettier": "^1.16.1",
-    "progress-estimator": "^0.2.2",
     "react": "16.8.0-alpha.1",
-    "rollup": "^1.1.2",
-    "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-terser": "^4.0.2",
-    "shelljs": "^0.8.3",
-    "sort-package-json": "^1.17.1",
-    "strip-ansi": "^5.0.0"
+    "semantic-release": "^16.0.0-beta.17",
+    "sort-package-json": "^1.17.1"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.0.0",
@@ -98,35 +68,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "bundlesize": [
-    {
-      "path": "./lib/*/development.{js,mjs}",
-      "maxSize": "20 kB"
-    },
-    {
-      "path": "./lib/*/production.{js,mjs}",
-      "maxSize": "10 kB"
-    }
-  ],
-  "exports": [
-    "createAnimatedValue",
-    "createAnimatedValueXY",
-    "interpolate",
-    "spring",
-    "timing",
-    "delay",
-    "sequence",
-    "parallel",
-    "stagger",
-    "createAnimatedComponent",
-    "a",
-    "button",
-    "div",
-    "span",
-    "img",
-    "Easing",
-    "useAnimatedValue"
-  ],
   "importSort": {
     ".js": {
       "parser": "babylon",
@@ -152,6 +93,21 @@
     ]
   },
   "module:modern": "lib/addimated.mjs",
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "develop",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
   "sideEffects": false,
   "source": "src/index.js"
 }

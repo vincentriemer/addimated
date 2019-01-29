@@ -1,0 +1,27 @@
+{
+  "name": "addimated-examples",
+  "private": true,
+  "dependencies": {
+    "@babel/runtime": "^7.3.1",
+    "@unstable/addimated": "file:./..",
+    "react": "16.8.0-alpha.1",
+    "react-dom": "16.8.0-alpha.1",
+    "react-scripts": "2.0.3",
+    "react-with-gesture": "^4.0.2",
+    "@reach/router": "^1.2.1"
+  },
+  "devDependencies": {
+    "import-all.macro": "^2.0.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postinstall": "rm -rf node_modules/@unstable/addimated/{node_modules,examples}"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

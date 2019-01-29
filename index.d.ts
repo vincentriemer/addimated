@@ -25,15 +25,6 @@ declare module "@unstable/addimated" {
     stopAnimations(callback?: (value: { x: number; y: number }) => void): void;
 
     /**
-     * Converts `{x, y}` into `{left, top}` for use in style, e.g.
-     *
-     *```javascript
-     *  style={this.state.anim.getLayout()}
-     *```
-     */
-    getLayout(): { [key: string]: AnimatedValue };
-
-    /**
      * Converts `{x, y}` into a useable translation transform, e.g.
      *
      *```javascript
@@ -162,4 +153,14 @@ declare module "@unstable/addimated" {
     value: number,
     animationFactory?: AnimationFactory
   ): [AnimatedValue, boolean];
+
+  type AnimationFactoryXY = (
+    animatedValue: AnimatedValueXY,
+    toValue: { x: number; y: number }
+  ) => CompositeAnimation;
+
+  export function useAnimatedValueXY(
+    value: { x: number; y: number },
+    animationFactory?: AnimationFactoryXY
+  ): [AnimatedValueXY, boolean];
 }

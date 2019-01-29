@@ -9,6 +9,7 @@
 [lints]
 
 [options]
+module.name_mapper='^\@unstable\/addimated$' -> '<PROJECT_ROOT>/src/index.js'
 
 [strict]
 nonstrict-import

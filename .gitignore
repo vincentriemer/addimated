@@ -87,4 +87,4 @@ typings/
 
 # build output
 lib
-lib-commonjs
+examples/build

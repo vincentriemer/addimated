@@ -1,0 +1,34 @@
+{
+  "bundleSizes": [
+    {
+      "filename": "commonjs/development.js",
+      "size": 68044,
+      "gzip": 16943
+    },
+    {
+      "filename": "commonjs/production.js",
+      "size": 24008,
+      "gzip": 8331
+    },
+    {
+      "filename": "esm-modern/development.mjs",
+      "size": 61724,
+      "gzip": 16127
+    },
+    {
+      "filename": "esm-modern/production.mjs",
+      "size": 21134,
+      "gzip": 7889
+    },
+    {
+      "filename": "esm/development.js",
+      "size": 67438,
+      "gzip": 16766
+    },
+    {
+      "filename": "esm/production.js",
+      "size": 23457,
+      "gzip": 8165
+    }
+  ]
+}

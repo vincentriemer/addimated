@@ -6,10 +6,12 @@ import { AnimatedValue } from "./AnimatedValue";
 import { AnimatedWithChildren } from "./AnimatedWithChildren";
 import { type Manager } from "./Manager";
 
-export type AnimatedValueXYInput = {
-  x: number | AnimatedValue,
-  y: number | AnimatedValue
-};
+export type AnimatedValueXYInput =
+  | {|
+      x: number,
+      y: number
+    |}
+  | {| x: AnimatedValue, y: AnimatedValue |};
 
 class AnimatedValueXY extends AnimatedWithChildren {
   x: AnimatedValue;
@@ -65,20 +67,6 @@ class AnimatedValueXY extends AnimatedWithChildren {
     this.x.stopAnimations();
     this.y.stopAnimations();
     callback && callback(currentValue);
-  }
-
-  /**
-   * Converts `{x, y}` into `{left, top}` for use in style, e.g.
-   *
-   *```javascript
-   *  style={this.state.anim.getLayout()}
-   *```
-   */
-  getLayout(): { left: AnimatedValue, top: AnimatedValue } {
-    return {
-      left: this.x,
-      top: this.y
-    };
   }
 
   /**
