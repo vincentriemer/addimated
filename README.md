@@ -1,6 +1,23 @@
-# addimated [![](https://img.shields.io/npm/v/@unstable/addimated.svg)](https://www.npmjs.com/package/@unstable/addimated) [![](https://img.shields.io/bundlephobia/minzip/@unstable/addimated.svg)](https://bundlephobia.com/result?p=@unstable/addimated)
+<h1 align="center">
+  <img alt="addimated" width="152" src="https://ghtext.vincentriemer.com/?text=addimated&type=h1&weight=light"/>
+</h1>
 
-An always interruptable, declarative animation library for React.
+<p align="center">An always interruptable, declarative animation library for React.</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@unstable/addimated">
+    <img src="https://img.shields.io/npm/v/@unstable/addimated.svg">
+  </a>
+  <a href="https://bundlephobia.com/result?p=@unstable/addimated">
+    <img src="https://img.shields.io/bundlephobia/minzip/@unstable/addimated.svg">
+  </a>
+</p>
+
+<h2>
+  <img width="146" alt="WARNING" src="https://ghtext.vincentriemer.com/?text=WARNING&type=h1&weight=black&color=%23d73a49"/>
+</h2>
+
+This project is largely a proof-of-concept/experiment as a stepping stone to future animation work I have planned. Feel free to fool around with this but I wouldn't recommend using it in production.
 
 ## Installation
 
@@ -211,7 +228,7 @@ An equivalent hook to `useAnimatedValue` but handles [`AnimatedXY`](#animatedxy)
 - `setOffset(offset: number): void`
 - `flattenOffset(): void`
 - `extractOffset(): void`
-- `stopAnimations(callback: ?Function): void`
+- `stopAnimations(callback: ?(value: number) => void): void`
 
 #### AnimatedValueXY
 
@@ -226,14 +243,14 @@ An equivalent hook to `useAnimatedValue` but handles [`AnimatedXY`](#animatedxy)
 - `setOffset(offset: { x: number, y: number }): void`
 - `flattenOffset(): void`
 - `extractOffset(): void`
-- `stopAnimations(callback: ?Function): void`
+- `stopAnimations(callback: ?(value: { x: number, y: number }) => void): void`
 - `getTranslateTransform(): [{ translateX: number }, { translateY: number}]`
 
 #### Animation
 
 ##### Methods
 
-- `start(callback: ?Function): void`
+- `start(callback: ?({ isFinished: boolean}) => void): void`
 
 ## Development
 
