@@ -64,6 +64,7 @@ Addimated's API and usage largly mirror's React Native's [Animated](https://face
 
 ## Examples
 
+- [Timing Sequence Overlap](https://codesandbox.io/embed/50wx3l4n6x?view=preview)
 - [Spring/Timing Interruption](https://codesandbox.io/embed/4xy742lvk7?view=preview)
 - [With `react-with-gesture`](https://codesandbox.io/embed/wo1vnm11pl?view=preview)
 
