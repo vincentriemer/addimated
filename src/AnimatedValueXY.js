@@ -70,20 +70,6 @@ class AnimatedValueXY extends AnimatedWithChildren {
   }
 
   /**
-   * Converts `{x, y}` into `{left, top}` for use in style, e.g.
-   *
-   *```javascript
-   *  style={this.state.anim.getLayout()}
-   *```
-   */
-  getLayout(): { left: AnimatedValue, top: AnimatedValue } {
-    return {
-      left: this.x,
-      top: this.y
-    };
-  }
-
-  /**
    * Converts `{x, y}` into a useable translation transform, e.g.
    *
    *```javascript
