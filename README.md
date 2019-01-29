@@ -18,6 +18,31 @@ yarn add @unstable/addimated
 import * as Animated from "@unstable/addimated";
 ```
 
+Addimated's API and usage largly mirror's React Native's [Animated](https://facebook.github.io/react-native/docs/animated) with a few notable changes:
+
+- Addimated exports a namespace instead of a default object export
+- When creating new animated values, instead of constructing classes like `new Animated.Value()` or `new Animated.ValueXY()`, you call the factory functions `Animated.createAnimatedValue()` and `Animated.createAnimatedValueXY()`
+- `interpolate` is its own exported function instead of a method on an animated value. So instead of
+
+  ```js
+  value.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-100, 100]
+  });
+  ```
+
+  you should use
+
+  ```js
+  Animated.interpolate(value, {
+    inputRange: [0, 1],
+    outputRange: [-100, 100]
+  });
+  ```
+
+- Since Addimated targets the web instead of React Native, instead of exporting `Animated.View`, `Animated.Image`, ect. it exports [animated components suitable for the web](#built-in-animated-components).
+- Addimated provides hooks for a better development experience in React functional components. See [useAnimatedValue](#useanimatedvaluecurrentvalue-number-animationfactory-function-animatedvalue-boolean) for usage.
+
 ## Examples
 
 - [Spring/Timing Interruption](https://codesandbox.io/embed/4xy742lvk7?view=preview)
@@ -43,12 +68,12 @@ Maps input ranges to output ranges, typically using a linear interpolation but a
 
 Config is an object that may have the following options:
 
-- `inputRange`: _(required)_
-- `outputRange`: _(required)_
-- `easing`:
-- `extrapolate`:
-- `extrapolateLeft`:
-- `extrapolateRight`:
+- `inputRange`: _(required)_ An array of numbers (must be ascending) used to map against.
+- `outputRange`: _(required)_ An array of numbers (or strings for colors or values with units) to map to.
+- `easing`: an easing function to use instead of the default linear interpolation.
+- `extrapolate`: By default, `interpolate` will extrapolate values outside the input/output range with `"extend"`, but you can restrict the values by providing `"clamp"`.
+- `extrapolateLeft`: Same as `extrapolate` but only for the left side of the interpolation.
+- `extrapolateRight`: Same as `extrapolate` but only for the right side of the interpolation.
 
 ### Animations
 
@@ -122,8 +147,8 @@ Make any React component Animatable. Used to create `Animated.div`, etc.
 - `a`
 - `button`
 - `div`
-- `span`
 - `img`
+- `span`
 
 ### Hooks
 
@@ -209,3 +234,33 @@ An equivalent hook to `useAnimatedValue` but handles [`AnimatedXY`](#animatedxy)
 ##### Methods
 
 - `start(callback: ?Function): void`
+
+## Development
+
+To do a local build of Addimated: clone the respository, pull the package's depedencies, and run the project's build script like so:
+
+```sh
+# clone repo
+git clone https://github.com/vincentriemer/addimated.git
+cd addimated
+
+# pull dependencies
+yarn install
+
+# run build script
+yarn run build
+```
+
+Once you have done a local build, you can run the project's internal examples against it to test your changes by performing the following:
+
+```sh
+# assuming the current working directory is the root of the repo,
+# navigate to the examples folder
+cd examples
+
+# pull the example project's dependencies
+yarn install
+
+# start the development server
+yarn run start
+```
