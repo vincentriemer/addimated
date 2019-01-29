@@ -2,7 +2,7 @@
   <img alt="addimated" width="152" src="https://ghtext.vincentriemer.com/?text=addimated&type=h1&weight=light"/>
 </h1>
 
-<p align="center">An always interruptable, declarative animation library for React.</p>
+<p align="center">An always interruptible, declarative animation library for React.</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@unstable/addimated">
