@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="addimated" width="152" src="https://ghtext.vincentriemer.com/?text=addimated&type=h1&weight=light"/>
+  addimated
 </h1>
 
 <p align="center">An always interruptible, declarative animation library for React.</p>
@@ -17,7 +17,7 @@
 <br />
 
 <h2>
-  <img width="146" alt="WARNING" src="https://ghtext.vincentriemer.com/?text=WARNING&type=h1&weight=black&color=%23d73a49"/>
+  WARNING
 </h2>
 
 This project is largely a proof-of-concept/experiment as a stepping stone to future animation work I have planned. Feel free to fool around with this but I wouldn't recommend using it in production. To wit, this library uses React hooks in its core so it depends on the unstable React version `16.8.0-alpha.1`.
